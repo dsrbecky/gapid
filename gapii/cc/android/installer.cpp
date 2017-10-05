@@ -22,6 +22,7 @@
 #include "core/cc/log.h"
 
 #include <dlfcn.h>
+#include <unistd.h>
 
 #include <unordered_map>
 
@@ -179,7 +180,15 @@ void* Installer::install(void* func_import, const void* func_export) {
     return callback;
 }
 
+void wait() {
+  for (;;) {
+    sleep(0);
+  }
+}
+
 void Installer::install_gles() {
+    wait();
+
     // Start by loading all the drivers.
     void* drivers[NELEM(gDriverPaths)];
     for (int i = 0; i < NELEM(gDriverPaths); ++i) {
